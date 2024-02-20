@@ -8,16 +8,15 @@ cd /Users/nischal/Downloads/Alzheimer/Alzheimer_mouse
 
 # Running QC for fastaq
 
-fastqc ../SRR19042193.fastq -o ./results/
+# fastqc ../SRR19042193.fastq -o ./results/
 
 # running trimmomatic to trim the poor reads
 
-java -jar /Users/nischal/Downloads/Bioinformatics/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 4 ./results/SRR19042193.fastq ./results/SRR19042193_trimmed.fastq TRAILING:10 -phred33
-echo "Trimmed Sucessfully"
+java -jar /Users/nischal/Downloads/Bioinformatics/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 4 -phred33 ../SRR19042193.fastq ./results/SRR19042193_trimmed_1P.fastq ./results/SRR19042193_trimmed_1U.fastq ./results/SRR19042193_trimmed_2P.fastq ./results/SRR19042193_trimmed_2U.fastq TRAILING:10
 
 # run alignment
 
-/Users/nischal/Downloads/Bioinformatics/hisat2/hisat2 -q --rna-strandness R -x ../grcm38/genome -U ./data/SRR19042193_trimmed.fastq | samtools sort -o ./results/dSRR19042193_trimmed.bam
+/Users/nischal/Downloads/Bioinformatics/hisat2/hisat2 -q --rna-strandness RF -x ../grcm38/genome -U ../SRR19042193.fastq | samtools sort -o ./results/dSRR19042193_trimmed.bam
 echo "HISAT2 finished running!"
 
 
